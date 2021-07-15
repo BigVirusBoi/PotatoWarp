@@ -45,7 +45,6 @@ public class WarpsMenu extends PaginatedMenu {
                 Warp warp = WarpUtils.getWarp(id);
                 if (warp != null) {
                     warp.warpPlayer(player);
-                    player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, .5f, 1f);
                 } else {
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 0f);
                     player.sendMessage(Messages.ERROR);
@@ -60,7 +59,7 @@ public class WarpsMenu extends PaginatedMenu {
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
                     }
                 } else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")) {
-                    if (!((index + 1) >= PotatoWarp.WARPS.size())) {
+                    if (!((index + 1) >= PotatoWarp.getWarps().size())) {
                         page = page + 1;
                         super.open();
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
@@ -74,7 +73,7 @@ public class WarpsMenu extends PaginatedMenu {
     public void setMenuItems() {
         addMenuBorder();
 
-        List<Warp> list = new ArrayList<>(PotatoWarp.WARPS.values());
+        List<Warp> list = new ArrayList<>(PotatoWarp.getWarps().values());
 
         if (!list.isEmpty()) {
             for (int i = 0; i < getMaxItemsPerPage(); i++) {

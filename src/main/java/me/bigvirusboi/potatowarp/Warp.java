@@ -1,17 +1,16 @@
 package me.bigvirusboi.potatowarp;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class Warp {
     private final String id;
-    private final World world;
     private final Location location;
 
     public Warp(String id, Location location) {
         this.id = id;
-        this.world = location.getWorld();
         this.location = location;
     }
 
@@ -19,16 +18,9 @@ public class Warp {
         return id;
     }
 
-    public World getWorld() {
-        return world;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
     public void warpPlayer(Player player) {
         player.sendMessage(Messages.warped(id));
         player.teleport(location);
+        Bukkit.getScheduler().runTaskLater(PotatoWarp.getInstance(), () -> player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, .5f, 1f), 1);
     }
 }

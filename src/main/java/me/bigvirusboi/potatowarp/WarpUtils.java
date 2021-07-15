@@ -27,8 +27,8 @@ public class WarpUtils {
             }
         }
 
-        PotatoWarp.WARPS.clear();
-        PotatoWarp.WARPS.putAll(warps);
+        PotatoWarp.getWarps().clear();
+        PotatoWarp.getWarps().putAll(warps);
     }
 
     public static void createWarp(String id, Location loc) {
@@ -37,7 +37,7 @@ public class WarpUtils {
         ConfigurationSection section = sec.createSection(id);
         section.set("location", locToString(loc));
         FileManager.saveFile(yml);
-        PotatoWarp.WARPS.put(id, new Warp(id, loc));
+        PotatoWarp.getWarps().put(id, new Warp(id, loc));
     }
 
     public static void deleteWarp(String id) {
@@ -45,7 +45,7 @@ public class WarpUtils {
         ConfigurationSection sec = getOrCreateSection(yml, "Warps");
         sec.set(id, null);
         FileManager.saveFile(yml);
-        PotatoWarp.WARPS.remove(id);
+        PotatoWarp.getWarps().remove(id);
     }
 
     public static Warp getWarp(ConfigurationSection sec) {
@@ -61,7 +61,7 @@ public class WarpUtils {
     }
 
     public static Warp getWarp(String id) {
-        return PotatoWarp.WARPS.get(id);
+        return PotatoWarp.getWarps().get(id);
     }
 
     public static Location locFromString(String name) {

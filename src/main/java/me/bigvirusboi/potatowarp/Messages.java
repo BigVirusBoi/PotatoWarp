@@ -1,16 +1,20 @@
 package me.bigvirusboi.potatowarp;
 
 public class Messages {
-    public static final String PLAYERS_ONLY = "Only players can execute this command!";
+    public static final String PLAYERS_ONLY = "§cOnly players can execute this command!";
 
-    public static final String SPECIFY_WARP = "Please specify a warp name!";
-    public static final String WARP_CREATED = "Warp %s created!";
-    public static final String WARP_NOT_EXISTING = "Warp %s does not exist!";
-    public static final String WARP_EXISTS = "Warp %s already exists!";
-    public static final String WARP = "Warped to %s";
+    public static final String SPECIFY_NAME = "§cPlease specify a warp name!";
+    public static final String NAME_INVALID = "§cName §e§n%s§c is invalid!";
+    public static final String WARP_CREATED = "§aWarp §e§n%s§a created!";
+    public static final String WARP_NOT_EXISTING = "§cWarp §e§n%s§c does not exist!";
+    public static final String WARP_EXISTS = "§cWarp §e§n%s§c already exists!";
+    public static final String WARP = "§bWarped to §e§n%s";
 
     public static final String ERROR = "§cAn unexpected error occurred";
 
+    public static String nameInvalid(String name) {
+        return String.format(NAME_INVALID, name);
+    }
     public static String warpCreated(String name) {
         return String.format(WARP_CREATED, name);
     }

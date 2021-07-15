@@ -8,10 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.TreeMap;
 
 public final class PotatoWarp extends JavaPlugin {
-    public static final Map<String, Warp> WARPS = new HashMap<>();
+    private static final TreeMap<String, Warp> WARPS = new TreeMap<>();
     private static final HashMap<Player, PlayerMenuUtility> pmuMap = new HashMap<>();
 
     public static PotatoWarp instance;
@@ -20,7 +20,7 @@ public final class PotatoWarp extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        //saveDefaultConfig();
+        // TODO config stuff (make class) saveDefaultConfig();
         FileManager.setup();
         WarpUtils.readWarps();
 
@@ -29,7 +29,7 @@ public final class PotatoWarp extends JavaPlugin {
         getCommand("warp").setExecutor(new WarpCommand());
         getCommand("warp").setTabCompleter(new WarpCommand());
         getCommand("warps").setExecutor(new WarpsCommand());
-        getCommand("setwarp").setExecutor(new SetwarpCommand());
+        getCommand("setwarp").setExecutor(new SetWarpCommand());
 
         Bukkit.getScheduler().runTaskTimer(this, WarpUtils::readWarps, 10, 100);
     }
@@ -38,6 +38,10 @@ public final class PotatoWarp extends JavaPlugin {
     public void onDisable() {
         WARPS.clear();
         instance = null;
+    }
+
+    public static TreeMap<String, Warp> getWarps() {
+        return WARPS;
     }
 
     public static PlayerMenuUtility getPMU(Player p) {

@@ -8,18 +8,20 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SetwarpCommand implements CommandExecutor {
+public class SetWarpCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (args.length > 0) {
                 String id = args[0];
-                if (!PotatoWarp.WARPS.containsKey(id)) {
-                    WarpUtils.createWarp(id, player.getLocation());
-                    player.sendMessage(Messages.warpCreated(id));
-                } else sender.sendMessage(Messages.warpExists(id));
-            } else sender.sendMessage(Messages.SPECIFY_WARP);
+                if (id.length() <= 12) {
+                    if (!PotatoWarp.getWarps().containsKey(id)) {
+                        WarpUtils.createWarp(id, player.getLocation());
+                        player.sendMessage(Messages.warpCreated(id));
+                    } else sender.sendMessage(Messages.warpExists(id));
+                } else sender.sendMessage(Messages.nameInvalid(id));
+            } else sender.sendMessage(Messages.SPECIFY_NAME);
         } else {
             sender.sendMessage(Messages.PLAYERS_ONLY);
         }

@@ -2,7 +2,6 @@ package me.bigvirusboi.potatowarp.commands;
 
 import me.bigvirusboi.potatowarp.Messages;
 import me.bigvirusboi.potatowarp.PotatoWarp;
-import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,11 +20,10 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
             Player player = (Player) sender;
             if (args.length > 0) {
                 String id = args[0];
-                if (PotatoWarp.WARPS.containsKey(id)) {
-                    PotatoWarp.WARPS.get(id).warpPlayer(player);
-                    player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, .5f, 1f);
+                if (PotatoWarp.getWarps().containsKey(id)) {
+                    PotatoWarp.getWarps().get(id).warpPlayer(player);
                 } else sender.sendMessage(Messages.warpDoesntExist(id));
-            } else sender.sendMessage(Messages.SPECIFY_WARP);
+            } else sender.sendMessage(Messages.SPECIFY_NAME);
         } else {
             sender.sendMessage(Messages.PLAYERS_ONLY);
         }
@@ -40,7 +38,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
             Player player = (Player) sender;
             if (player.hasPermission("potatowarp.warp")) {
                 if (args.length == 1) {
-                    StringUtil.copyPartialMatches(args[0], PotatoWarp.WARPS.keySet(), completions);
+                    StringUtil.copyPartialMatches(args[0], PotatoWarp.getWarps().keySet(), completions);
                 }
                 Collections.sort(completions);
                 return completions;
