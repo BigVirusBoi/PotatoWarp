@@ -30,6 +30,8 @@ public final class PotatoWarp extends JavaPlugin {
         getCommand("warp").setTabCompleter(new WarpCommand());
         getCommand("warps").setExecutor(new WarpsCommand());
         getCommand("setwarp").setExecutor(new SetWarpCommand());
+        getCommand("delwarp").setExecutor(new DelWarpCommand());
+        getCommand("delwarp").setTabCompleter(new DelWarpCommand());
 
         Bukkit.getScheduler().runTaskTimer(this, WarpUtils::readWarps, 10, 100);
     }
