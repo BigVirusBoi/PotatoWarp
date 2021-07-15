@@ -1,0 +1,6 @@
+name: PotatoWarp
+version: ${project.version}
+main: me.bigvirusboi.potatowarp.PotatoWarp
+api-version: 1.17
+authors: [BigVirusBoi]
+description: A simple warp plugin!
