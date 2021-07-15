@@ -7,6 +7,8 @@ public class Messages {
     public static final String WARP_NOT_EXISTING = "Warp %s does not exist!";
     public static final String WARP = "Warped to %s";
 
+    public static final String ERROR = "§cAn unexpected error occurred";
+
     public static String warpDoesntExist(String name) {
         return String.format(WARP_NOT_EXISTING, name);
     }

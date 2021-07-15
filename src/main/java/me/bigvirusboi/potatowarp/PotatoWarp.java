@@ -1,7 +1,10 @@
 package me.bigvirusboi.potatowarp;
 
-import me.bigvirusboi.potatowarp.commands.WarpCommand;
+import me.bigvirusboi.potatowarp.commands.*;
+import me.bigvirusboi.potatowarp.menu.system.MenuListener;
+import me.bigvirusboi.potatowarp.menu.system.PlayerMenuUtility;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -9,8 +12,9 @@ import java.util.Map;
 
 public final class PotatoWarp extends JavaPlugin {
     public static final Map<String, Warp> WARPS = new HashMap<>();
+    private static final HashMap<Player, PlayerMenuUtility> pmuMap = new HashMap<>();
 
-    public PotatoWarp instance;
+    public static PotatoWarp instance;
 
     @Override
     public void onEnable() {
@@ -20,8 +24,11 @@ public final class PotatoWarp extends JavaPlugin {
         FileManager.setup();
         WarpUtils.readWarps();
 
+        getServer().getPluginManager().registerEvents(new MenuListener(), this);
+
         getCommand("warp").setExecutor(new WarpCommand());
         getCommand("warp").setTabCompleter(new WarpCommand());
+        getCommand("warps").setExecutor(new WarpsCommand());
 
         Bukkit.getScheduler().runTaskTimer(this, WarpUtils::readWarps, 10, 100);
     }
@@ -32,7 +39,19 @@ public final class PotatoWarp extends JavaPlugin {
         instance = null;
     }
 
-    public PotatoWarp getInstance() {
+    public static PlayerMenuUtility getPMU(Player p) {
+        PlayerMenuUtility pmu;
+        if (!(pmuMap.containsKey(p))) {
+            pmu = new PlayerMenuUtility(p);
+            pmuMap.put(p, pmu);
+
+            return pmu;
+        } else {
+            return pmuMap.get(p);
+        }
+    }
+
+    public static PotatoWarp getInstance() {
         return instance;
     }
 }

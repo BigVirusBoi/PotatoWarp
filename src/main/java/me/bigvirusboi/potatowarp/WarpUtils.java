@@ -60,6 +60,10 @@ public class WarpUtils {
         return null;
     }
 
+    public static Warp getWarp(String id) {
+        return PotatoWarp.WARPS.get(id);
+    }
+
     public static Location locFromString(String name) {
         String[] string = name.split(",");
         if (string.length >= 4) {

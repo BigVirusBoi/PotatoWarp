@@ -9,6 +9,7 @@ commands:
     permission: potatowarp.warp
     description: The command used to warp
   warps:
+    permission: potatowarp.warps
     description: The command used to list all warps
   setwarp:
     description: The command used to create a warp
