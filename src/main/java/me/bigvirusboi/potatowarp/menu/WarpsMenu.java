@@ -4,7 +4,7 @@ import me.bigvirusboi.potatowarp.Messages;
 import me.bigvirusboi.potatowarp.PotatoWarp;
 import me.bigvirusboi.potatowarp.Warp;
 import me.bigvirusboi.potatowarp.WarpUtils;
-import me.bigvirusboi.potatowarp.menu.system.PaginatedMenu;
+import me.bigvirusboi.potatowarp.menu.system.Menu;
 import me.bigvirusboi.potatowarp.menu.system.PlayerMenuUtility;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,7 +19,10 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WarpsMenu extends PaginatedMenu {
+public class WarpsMenu extends Menu {
+    private int page = 0;
+    private int index = 0;
+
     public WarpsMenu(PlayerMenuUtility pmu) {
         super(pmu);
     }
@@ -69,6 +72,15 @@ public class WarpsMenu extends PaginatedMenu {
         }
     }
 
+    public void addMenuBorder() {
+        for (int i = 0; i < 9; i++) {
+            inventory.setItem(45 + i, makeItem(Material.BLACK_STAINED_GLASS_PANE, "§r"));
+        }
+
+        if (page != 0) inventory.setItem(46, makeItem(Material.ARROW, ChatColor.GREEN + "Previous Page"));
+        if ((45 * (page + 1) < PotatoWarp.getWarps().size())) inventory.setItem(52, makeItem(Material.ARROW, ChatColor.GREEN + "Next Page"));
+    }
+
     @Override
     public void setMenuItems() {
         addMenuBorder();
@@ -76,8 +88,8 @@ public class WarpsMenu extends PaginatedMenu {
         List<Warp> list = new ArrayList<>(PotatoWarp.getWarps().values());
 
         if (!list.isEmpty()) {
-            for (int i = 0; i < getMaxItemsPerPage(); i++) {
-                index = getMaxItemsPerPage() * page + i;
+            for (int i = 0; i < 45; i++) {
+                index = 45 * page + i;
                 if (index >= list.size()) break;
 
                 Warp warp = list.get(i);
