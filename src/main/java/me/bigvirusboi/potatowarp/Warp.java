@@ -29,5 +29,6 @@ public class Warp {
 
     public void warpPlayer(Player player) {
         player.sendMessage(Messages.warped(id));
+        player.teleport(location);
     }
 }

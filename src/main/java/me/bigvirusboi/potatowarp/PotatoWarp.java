@@ -1,6 +1,7 @@
 package me.bigvirusboi.potatowarp;
 
 import me.bigvirusboi.potatowarp.commands.WarpCommand;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -16,12 +17,13 @@ public final class PotatoWarp extends JavaPlugin {
         instance = this;
 
         //saveDefaultConfig();
-        WARPS.putAll(WarpUtils.readWarps());
+        FileManager.setup();
+        WarpUtils.readWarps();
 
         getCommand("warp").setExecutor(new WarpCommand());
         getCommand("warp").setTabCompleter(new WarpCommand());
 
-        FileManager.setup();
+        Bukkit.getScheduler().runTaskTimer(this, WarpUtils::readWarps, 10, 100);
     }
 
     @Override

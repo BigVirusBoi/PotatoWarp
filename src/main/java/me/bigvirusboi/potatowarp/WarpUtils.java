@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WarpUtils {
-    public static Map<String, Warp> readWarps() {
+    public static void readWarps() {
         Map<String, Warp> warps = new HashMap<>();
 
         YamlConfiguration yml = FileManager.getWarpsConfig();
@@ -27,7 +27,8 @@ public class WarpUtils {
             }
         }
 
-        return warps;
+        PotatoWarp.WARPS.clear();
+        PotatoWarp.WARPS.putAll(warps);
     }
 
     public static void createWarp(String id, Location loc) {
