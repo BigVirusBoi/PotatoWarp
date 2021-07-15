@@ -1,6 +1,6 @@
 package me.bigvirusboi.potatowarp.commands;
 
-import me.bigvirusboi.potatowarp.Messages;
+import me.bigvirusboi.potatowarp.util.Messages;
 import me.bigvirusboi.potatowarp.PotatoWarp;
 import me.bigvirusboi.potatowarp.menu.WarpsMenu;
 import org.bukkit.command.Command;

@@ -1,6 +1,6 @@
 package me.bigvirusboi.potatowarp.commands;
 
-import me.bigvirusboi.potatowarp.Messages;
+import me.bigvirusboi.potatowarp.util.Messages;
 import me.bigvirusboi.potatowarp.PotatoWarp;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -22,8 +22,8 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                 String id = args[0];
                 if (PotatoWarp.getWarps().containsKey(id)) {
                     PotatoWarp.getWarps().get(id).warpPlayer(player);
-                } else sender.sendMessage(Messages.warpDoesntExist(id));
-            } else sender.sendMessage(Messages.SPECIFY_NAME);
+                } else sender.sendMessage(Messages.getConfigMessage(Messages.WARP_NOT_EXISTING, id));
+            } else sender.sendMessage(Messages.getConfigMessage(Messages.SPECIFY_NAME));
         } else {
             sender.sendMessage(Messages.PLAYERS_ONLY);
         }

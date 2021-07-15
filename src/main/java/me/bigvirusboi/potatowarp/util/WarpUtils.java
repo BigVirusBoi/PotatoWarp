@@ -1,5 +1,7 @@
-package me.bigvirusboi.potatowarp;
+package me.bigvirusboi.potatowarp.util;
 
+import me.bigvirusboi.potatowarp.PotatoWarp;
+import me.bigvirusboi.potatowarp.Warp;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;

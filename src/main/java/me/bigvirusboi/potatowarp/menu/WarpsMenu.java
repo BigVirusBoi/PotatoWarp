@@ -1,9 +1,9 @@
 package me.bigvirusboi.potatowarp.menu;
 
-import me.bigvirusboi.potatowarp.Messages;
+import me.bigvirusboi.potatowarp.util.Messages;
 import me.bigvirusboi.potatowarp.PotatoWarp;
 import me.bigvirusboi.potatowarp.Warp;
-import me.bigvirusboi.potatowarp.WarpUtils;
+import me.bigvirusboi.potatowarp.util.WarpUtils;
 import me.bigvirusboi.potatowarp.menu.system.Menu;
 import me.bigvirusboi.potatowarp.menu.system.PlayerMenuUtility;
 import org.bukkit.ChatColor;
@@ -93,7 +93,7 @@ public class WarpsMenu extends Menu {
                 if (index >= list.size()) break;
 
                 Warp warp = list.get(i);
-                ItemStack is = makeItem(Material.CLAY_BALL, "§b§n" + warp.getId(), "", "§7Click to warp");
+                ItemStack is = makeItem(Material.CLAY_BALL, "§b§n" + warp.getId(), "", "§eClick to warp");
 
                 ItemMeta im = is.getItemMeta();
                 im.getPersistentDataContainer().set(new NamespacedKey(PotatoWarp.getInstance(), "id"), PersistentDataType.STRING, warp.getId());

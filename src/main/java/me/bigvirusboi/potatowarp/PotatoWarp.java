@@ -3,6 +3,8 @@ package me.bigvirusboi.potatowarp;
 import me.bigvirusboi.potatowarp.commands.*;
 import me.bigvirusboi.potatowarp.menu.system.MenuListener;
 import me.bigvirusboi.potatowarp.menu.system.PlayerMenuUtility;
+import me.bigvirusboi.potatowarp.util.FileManager;
+import me.bigvirusboi.potatowarp.util.WarpUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,13 +16,13 @@ public final class PotatoWarp extends JavaPlugin {
     private static final TreeMap<String, Warp> WARPS = new TreeMap<>();
     private static final HashMap<Player, PlayerMenuUtility> pmuMap = new HashMap<>();
 
-    public static PotatoWarp instance;
+    private static PotatoWarp instance;
 
     @Override
     public void onEnable() {
         instance = this;
 
-        // TODO config stuff (make class) saveDefaultConfig();
+        saveDefaultConfig();
         FileManager.setup();
         WarpUtils.readWarps();
 

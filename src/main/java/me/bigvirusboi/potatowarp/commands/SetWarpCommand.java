@@ -1,8 +1,8 @@
 package me.bigvirusboi.potatowarp.commands;
 
-import me.bigvirusboi.potatowarp.Messages;
+import me.bigvirusboi.potatowarp.util.Messages;
 import me.bigvirusboi.potatowarp.PotatoWarp;
-import me.bigvirusboi.potatowarp.WarpUtils;
+import me.bigvirusboi.potatowarp.util.WarpUtils;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,10 +20,10 @@ public class SetWarpCommand implements CommandExecutor {
                     if (!PotatoWarp.getWarps().containsKey(id)) {
                         WarpUtils.createWarp(id, player.getLocation());
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
-                        player.sendMessage(Messages.warpCreated(id));
-                    } else sender.sendMessage(Messages.warpExists(id));
-                } else sender.sendMessage(Messages.nameInvalid(id));
-            } else sender.sendMessage(Messages.SPECIFY_NAME);
+                        player.sendMessage(Messages.getConfigMessage(Messages.WARP_CREATED, id));
+                    } else sender.sendMessage(Messages.getConfigMessage(Messages.WARP_EXISTS, id));
+                } else sender.sendMessage(Messages.getConfigMessage(Messages.NAME_INVALID, id));
+            } else sender.sendMessage(Messages.getConfigMessage(Messages.SPECIFY_NAME));
         } else {
             sender.sendMessage(Messages.PLAYERS_ONLY);
         }

@@ -1,8 +1,8 @@
 package me.bigvirusboi.potatowarp.commands;
 
-import me.bigvirusboi.potatowarp.Messages;
+import me.bigvirusboi.potatowarp.util.Messages;
 import me.bigvirusboi.potatowarp.PotatoWarp;
-import me.bigvirusboi.potatowarp.WarpUtils;
+import me.bigvirusboi.potatowarp.util.WarpUtils;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,9 +25,9 @@ public class DelWarpCommand implements CommandExecutor, TabExecutor {
                 if (PotatoWarp.getWarps().containsKey(id)) {
                     WarpUtils.deleteWarp(id);
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
-                    player.sendMessage(Messages.warpDeleted(id));
-                } else sender.sendMessage(Messages.warpDoesntExist(id));
-            } else sender.sendMessage(Messages.SPECIFY_NAME);
+                    player.sendMessage(Messages.getConfigMessage(Messages.WARP_DELETED, id));
+                } else sender.sendMessage(Messages.getConfigMessage(Messages.WARP_NOT_EXISTING, id));
+            } else sender.sendMessage(Messages.getConfigMessage(Messages.SPECIFY_NAME));
         } else {
             sender.sendMessage(Messages.PLAYERS_ONLY);
         }
