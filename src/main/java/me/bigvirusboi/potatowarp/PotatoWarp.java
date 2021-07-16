@@ -7,16 +7,21 @@ import me.bigvirusboi.potatowarp.data.Messages;
 import me.bigvirusboi.potatowarp.warp.Warp;
 import me.bigvirusboi.potatowarp.warp.WarpUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 
-public final class PotatoWarp extends JavaPlugin {
+public final class PotatoWarp extends JavaPlugin implements Listener {
     private static final HashMap<String, Warp> WARPS = new HashMap<>();
     public static final HashMap<Player, Long> PLAYER_TIME = new HashMap<>();
     public static final HashMap<Player, Warp> PLAYER_WARP = new HashMap<>();
+    public static final HashMap<Player, Location> PREV_LOCATION = new HashMap<>();
 
     private static PotatoWarp instance;
 
@@ -31,6 +36,7 @@ public final class PotatoWarp extends JavaPlugin {
         FileManager.setup();
         WarpUtils.readWarps();
 
+        getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
 
         getCommand("warp").setExecutor(new WarpCommand());
@@ -73,8 +79,15 @@ public final class PotatoWarp extends JavaPlugin {
         PLAYER_WARP.put(player, warp);
     }
 
-    public boolean isWarping(Player player) {
-        return PLAYER_TIME.containsKey(player);
+    @EventHandler
+    public void onMove(PlayerMoveEvent e) {
+        if (PLAYER_TIME.containsKey(e.getPlayer())) {
+            Location from = e.getFrom();
+            Location to = e.getTo();
+            if (from.getBlockX() != to.getBlockX() || from.getBlockY() != to.getBlockY() || from.getBlockZ() != to.getBlockZ()) {
+                cancelWarp(e.getPlayer());
+            }
+        }
     }
 
     @Override

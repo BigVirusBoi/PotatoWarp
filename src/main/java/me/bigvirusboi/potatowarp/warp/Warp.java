@@ -61,7 +61,7 @@ public class Warp {
     }
 
     public void warpPlayer(Player player) {
-        if (!PotatoWarp.getInstance().isWarping(player)) {
+        if (!PotatoWarp.PLAYER_TIME.containsKey(player)) {
             if (Config.shouldDelayWarp()) {
                 Messages.sendMessage(player, Messages.WARP_DELAY, new ReplaceString("warp", id), new ReplaceString("time", Config.WARP_DELAY));
                 PotatoWarp.getInstance().addWarpingPlayer(player, this);
