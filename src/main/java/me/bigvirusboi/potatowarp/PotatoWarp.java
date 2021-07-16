@@ -14,9 +14,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public final class PotatoWarp extends JavaPlugin implements Listener {
-    private static final HashMap<String, Warp> WARPS = new HashMap<>();
+    private static final LinkedHashMap<String, Warp> WARPS = new LinkedHashMap<>();
     public static final HashMap<Player, Long> PLAYER_TIME = new HashMap<>();
     public static final HashMap<Player, Warp> PLAYER_WARP = new HashMap<>();
     public static final HashMap<Player, Location> PREV_LOCATION = new HashMap<>();
@@ -96,7 +97,7 @@ public final class PotatoWarp extends JavaPlugin implements Listener {
         instance = null;
     }
 
-    public static HashMap<String, Warp> getWarps() {
+    public static LinkedHashMap<String, Warp> getWarps() {
         return WARPS;
     }
 

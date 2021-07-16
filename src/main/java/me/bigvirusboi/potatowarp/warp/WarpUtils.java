@@ -15,7 +15,7 @@ import java.util.*;
 
 public class WarpUtils {
     public static void readWarps() {
-        Map<String, Warp> warps = new HashMap<>();
+        LinkedHashMap<String, Warp> warps = new LinkedHashMap<>();
 
         YamlConfiguration yml = FileManager.getWarpsConfig();
         ConfigurationSection sec = yml.getConfigurationSection("Warps");

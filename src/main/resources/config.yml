@@ -7,7 +7,7 @@ warp-particles: true
 prepare-warp-particles: true
 
 ### Messages
-prefix: §b§lPotatoWarp §8»
+prefix: §e§lPotato§6§lWarp §8»
 message.specify_warp_name: §cPlease specify a warp name!
 message.name_invalid: §cName §e§n%name%§c is invalid!
 message.warp_created: §aWarp §e§n%warp%§a has been created!

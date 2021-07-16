@@ -23,8 +23,6 @@ commands:
     permission: potatowarp.delwarp
     description: The command used to delete a warp
     usage: /delwarp <name>
-    aliases:
-      - removewarp
   movewarp:
     permission: potatowarp.movewarp
     description: The command used to move a warp
