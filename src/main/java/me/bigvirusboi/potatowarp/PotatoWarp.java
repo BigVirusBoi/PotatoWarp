@@ -54,8 +54,9 @@ public final class PotatoWarp extends JavaPlugin implements Listener {
 
     public void warpPlayers() {
         for (Player player : PLAYER_TIME.keySet()) {
-            if (Config.PREPARE_WARP_PARTICLES) {
-                player.getWorld().spawnParticle(Particle.PORTAL, player.getLocation(), 25, 0, 0, 0, 3);
+            if (Config.PREPARE_WARP_PARTICLES && (PLAYER_TIME.get(player) - System.currentTimeMillis()) > 500) {
+                player.getWorld().spawnParticle(Particle.PORTAL, player.getLocation(), 25, 0, 0, 0, 10);
+                player.getWorld().spawnParticle(Particle.CRIMSON_SPORE, player.getLocation(), 15, 0, 0, 0, 0.01);
             }
             if (PLAYER_TIME.get(player) <= System.currentTimeMillis()) {
                 PLAYER_WARP.get(player).forceWarp(player);
