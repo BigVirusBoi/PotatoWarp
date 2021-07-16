@@ -1,4 +1,6 @@
-package me.bigvirusboi.potatowarp;
+package me.bigvirusboi.potatowarp.data;
+
+import me.bigvirusboi.potatowarp.PotatoWarp;
 
 public class Config {
     public static boolean shouldDelayWarp() {

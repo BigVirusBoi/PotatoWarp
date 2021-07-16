@@ -1,7 +1,7 @@
-package me.bigvirusboi.potatowarp.util;
+package me.bigvirusboi.potatowarp.warp;
 
 import me.bigvirusboi.potatowarp.PotatoWarp;
-import me.bigvirusboi.potatowarp.Warp;
+import me.bigvirusboi.potatowarp.data.FileManager;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -11,9 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class WarpUtils {
     public static void readWarps() {
@@ -50,8 +48,9 @@ public class WarpUtils {
         sec.set("location", locToString(loc));
         sec.set("icon", icon.name());
         sec.set("glowing", false);
+        sec.set("restricted", false);
         FileManager.saveFile(yml);
-        PotatoWarp.getWarps().put(id, new Warp(id, loc, icon, false));
+        PotatoWarp.getWarps().put(id, new Warp(id, loc, icon));
     }
 
     public static void saveWarp(Warp warp) {
@@ -60,6 +59,7 @@ public class WarpUtils {
         sec.set("location", locToString(warp.getLocation()));
         sec.set("icon", warp.getIcon().name());
         sec.set("glowing", warp.isGlowing());
+        sec.set("restricted", warp.isRestricted());
         FileManager.saveFile(yml);
         PotatoWarp.getWarps().replace(warp.getId(), warp);
     }
@@ -83,10 +83,11 @@ public class WarpUtils {
                     Material icon = Material.getMaterial(iconName);
                     if (icon != null) {
                         boolean glowing = sec.getBoolean("glowing");
-                        return new Warp(id, loc, icon, glowing);
+                        boolean restricted = sec.getBoolean("restricted");
+                        return new Warp(id, loc, icon, glowing, restricted);
                     }
                 }
-                return new Warp(id, loc, Material.CLAY_BALL, false);
+                return new Warp(id, loc, Material.CLAY_BALL);
             }
         }
         return null;
@@ -135,6 +136,8 @@ public class WarpUtils {
     }
 
     public static ItemStack createWarpItem(Warp warp, boolean hasLore, boolean hasId) {
+        List<String> lore = new ArrayList<>();
+
         ItemStack stack = new ItemStack(warp.getIcon(), 1);
         ItemMeta meta = stack.getItemMeta();
         meta.setDisplayName("§b§n" + warp.getId());
@@ -142,8 +145,10 @@ public class WarpUtils {
             meta.addEnchant(Enchantment.THORNS, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
-        if (hasLore) meta.setLore(Collections.singletonList("§eClick to warp!"));
+        if (warp.isRestricted()) lore.add("§c§lRESTRICTED");
+        if (hasLore) lore.add("§eClick to warp!");
         if (hasId) meta.getPersistentDataContainer().set(new NamespacedKey(PotatoWarp.getInstance(), "id"), PersistentDataType.STRING, warp.getId());
+        meta.setLore(lore);
         stack.setItemMeta(meta);
         return stack;
     }

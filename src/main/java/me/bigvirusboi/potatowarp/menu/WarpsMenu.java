@@ -1,11 +1,11 @@
 package me.bigvirusboi.potatowarp.menu;
 
-import me.bigvirusboi.potatowarp.util.Messages;
+import me.bigvirusboi.potatowarp.data.Permissions;
 import me.bigvirusboi.potatowarp.PotatoWarp;
-import me.bigvirusboi.potatowarp.Warp;
-import me.bigvirusboi.potatowarp.util.WarpUtils;
+import me.bigvirusboi.potatowarp.warp.Warp;
 import me.bigvirusboi.potatowarp.menu.system.Menu;
-import me.bigvirusboi.potatowarp.menu.system.PlayerMenuUtility;
+import me.bigvirusboi.potatowarp.data.Messages;
+import me.bigvirusboi.potatowarp.warp.WarpUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -13,7 +13,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -24,26 +23,25 @@ public class WarpsMenu extends Menu {
     private int page = 0;
     private int index = 0;
 
-    public WarpsMenu(PlayerMenuUtility pmu) {
-        super(pmu);
+    public WarpsMenu(Player player) {
+        super(player);
     }
 
     @Override
-    public String getMenuName() {
+    public String getName() {
         return "Warps";
     }
 
     @Override
-    public int getSlots() {
-        return 54;
+    public int getRows() {
+        return 6;
     }
 
     @Override
-    public void handleMenu(InventoryClickEvent e) {
+    public void handle(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
 
         if (e.getCurrentItem() == null) return;
-
         if (e.getCurrentItem().getType() == Material.ARROW) {
             if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Previous Page")) {
                 if (page != 0) {
@@ -68,7 +66,7 @@ public class WarpsMenu extends Menu {
                         ClickType type = e.getClick();
                         if (type == ClickType.MIDDLE) {
                             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
-                            new EditWarpMenu(pmu, warp).open();
+                            new EditWarpMenu(player, warp).open();
                         } else if (type.isShiftClick()) {
                             warp.forceWarp(player);
                             player.closeInventory();
@@ -97,7 +95,7 @@ public class WarpsMenu extends Menu {
     }
 
     @Override
-    public void setMenuItems() {
+    public void setItems() {
         addMenuBorder();
 
         List<Warp> list = new ArrayList<>(PotatoWarp.getWarps().values());
@@ -108,7 +106,10 @@ public class WarpsMenu extends Menu {
                 if (index >= list.size()) break;
 
                 Warp warp = list.get(i);
-                inventory.addItem(WarpUtils.createWarpItem(warp, true, true));
+                if (!warp.isRestricted()) inventory.addItem(WarpUtils.createWarpItem(warp, true, true));
+                if (warp.isRestricted() && player.hasPermission(Permissions.WARP_RESTRICTED)) {
+                    inventory.addItem(WarpUtils.createWarpItem(warp, true, true));
+                }
             }
         }
     }

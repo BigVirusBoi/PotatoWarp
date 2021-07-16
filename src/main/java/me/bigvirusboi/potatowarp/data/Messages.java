@@ -1,6 +1,7 @@
-package me.bigvirusboi.potatowarp.util;
+package me.bigvirusboi.potatowarp.data;
 
 import me.bigvirusboi.potatowarp.PotatoWarp;
+import me.bigvirusboi.potatowarp.warp.ReplaceString;
 import org.bukkit.entity.Player;
 
 public class Messages {
@@ -13,6 +14,7 @@ public class Messages {
     public static final String WARP_DELETED = "message.warp_deleted";
     public static final String WARP_MOVED = "message.warp_moved";
     public static final String WARP_NOT_EXISTING = "message.warp_not_existing";
+    public static final String WARP_RESTRICTED = "message.warp_restricted";
     public static final String WARP_EXISTS = "message.warp_exists";
     public static final String WARP_DELAY = "message.warp_delay";
     public static final String WARP = "message.warp";

@@ -1,4 +1,4 @@
-package me.bigvirusboi.potatowarp.util;
+package me.bigvirusboi.potatowarp.data;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 

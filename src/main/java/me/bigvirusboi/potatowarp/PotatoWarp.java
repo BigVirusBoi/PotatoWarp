@@ -1,11 +1,12 @@
 package me.bigvirusboi.potatowarp;
 
 import me.bigvirusboi.potatowarp.commands.*;
+import me.bigvirusboi.potatowarp.data.Config;
 import me.bigvirusboi.potatowarp.menu.system.MenuListener;
-import me.bigvirusboi.potatowarp.menu.system.PlayerMenuUtility;
-import me.bigvirusboi.potatowarp.util.FileManager;
-import me.bigvirusboi.potatowarp.util.Messages;
-import me.bigvirusboi.potatowarp.util.WarpUtils;
+import me.bigvirusboi.potatowarp.data.FileManager;
+import me.bigvirusboi.potatowarp.data.Messages;
+import me.bigvirusboi.potatowarp.warp.Warp;
+import me.bigvirusboi.potatowarp.warp.WarpUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,10 +14,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.HashMap;
 
 public final class PotatoWarp extends JavaPlugin {
-    private static HashMap<String, Warp> WARPS = new HashMap<>();
+    private static final HashMap<String, Warp> WARPS = new HashMap<>();
     public static final HashMap<Player, Long> PLAYER_TIME = new HashMap<>();
     public static final HashMap<Player, Warp> PLAYER_WARP = new HashMap<>();
-    private static final HashMap<Player, PlayerMenuUtility> pmuMap = new HashMap<>();
 
     private static PotatoWarp instance;
 
@@ -81,18 +81,6 @@ public final class PotatoWarp extends JavaPlugin {
 
     public static HashMap<String, Warp> getWarps() {
         return WARPS;
-    }
-
-    public static PlayerMenuUtility getPMU(Player p) {
-        PlayerMenuUtility pmu;
-        if (!(pmuMap.containsKey(p))) {
-            pmu = new PlayerMenuUtility(p);
-            pmuMap.put(p, pmu);
-
-            return pmu;
-        } else {
-            return pmuMap.get(p);
-        }
     }
 
     public static PotatoWarp getInstance() {

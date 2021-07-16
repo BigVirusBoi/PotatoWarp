@@ -1,7 +1,8 @@
-package me.bigvirusboi.potatowarp;
+package me.bigvirusboi.potatowarp.warp;
 
-import me.bigvirusboi.potatowarp.util.Messages;
-import me.bigvirusboi.potatowarp.util.ReplaceString;
+import me.bigvirusboi.potatowarp.PotatoWarp;
+import me.bigvirusboi.potatowarp.data.Config;
+import me.bigvirusboi.potatowarp.data.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,14 +12,23 @@ import org.bukkit.entity.Player;
 public class Warp {
     private final String id;
     private Location location;
-    private Material icon;
+    private final Material icon;
     private boolean glowing;
+    private boolean restricted;
 
-    public Warp(String id, Location location, Material icon, boolean glowing) {
+    public Warp(String id, Location location, Material icon) {
+        this.id = id;
+        this.location = location;
+        this.icon = icon;
+        this.glowing = false;
+    }
+
+    public Warp(String id, Location location, Material icon, boolean glowing, boolean restricted) {
         this.id = id;
         this.location = location;
         this.icon = icon;
         this.glowing = glowing;
+        this.restricted = restricted;
     }
 
     public String getId() {
@@ -37,12 +47,20 @@ public class Warp {
         return glowing;
     }
 
+    public boolean isRestricted() {
+        return restricted;
+    }
+
     public void setLocation(Location location) {
         this.location = location;
     }
 
     public void setGlowing(boolean glowing) {
         this.glowing = glowing;
+    }
+
+    public void setRestricted(boolean restricted) {
+        this.restricted = restricted;
     }
 
     public void warpPlayer(Player player) {

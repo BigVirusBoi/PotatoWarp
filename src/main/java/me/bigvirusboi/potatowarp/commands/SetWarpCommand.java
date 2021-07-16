@@ -1,9 +1,10 @@
 package me.bigvirusboi.potatowarp.commands;
 
-import me.bigvirusboi.potatowarp.util.Messages;
+import me.bigvirusboi.potatowarp.data.Permissions;
+import me.bigvirusboi.potatowarp.data.Messages;
 import me.bigvirusboi.potatowarp.PotatoWarp;
-import me.bigvirusboi.potatowarp.util.ReplaceString;
-import me.bigvirusboi.potatowarp.util.WarpUtils;
+import me.bigvirusboi.potatowarp.warp.ReplaceString;
+import me.bigvirusboi.potatowarp.warp.WarpUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -50,7 +51,7 @@ public class SetWarpCommand implements CommandExecutor, TabCompleter {
             List<String> completions = new ArrayList<>();
 
             Player player = (Player) sender;
-            if (player.hasPermission("potatowarp.setwarp")) {
+            if (player.hasPermission(Permissions.SETWARP)) {
                 if (args.length == 2) {
                     StringUtil.copyPartialMatches(args[1], Arrays.stream(Material.values()).map(Material::name).map(String::toLowerCase).collect(Collectors.toList()), completions);
                 }

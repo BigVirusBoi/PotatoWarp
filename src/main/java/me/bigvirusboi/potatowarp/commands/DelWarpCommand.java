@@ -1,9 +1,10 @@
 package me.bigvirusboi.potatowarp.commands;
 
-import me.bigvirusboi.potatowarp.util.Messages;
+import me.bigvirusboi.potatowarp.data.Permissions;
+import me.bigvirusboi.potatowarp.data.Messages;
 import me.bigvirusboi.potatowarp.PotatoWarp;
-import me.bigvirusboi.potatowarp.util.ReplaceString;
-import me.bigvirusboi.potatowarp.util.WarpUtils;
+import me.bigvirusboi.potatowarp.warp.ReplaceString;
+import me.bigvirusboi.potatowarp.warp.WarpUtils;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -41,7 +42,7 @@ public class DelWarpCommand implements CommandExecutor, TabExecutor {
             List<String> completions = new ArrayList<>();
 
             Player player = (Player) sender;
-            if (player.hasPermission("potatowarp.delwarp")) {
+            if (player.hasPermission(Permissions.DELWARP)) {
                 if (args.length == 1) {
                     StringUtil.copyPartialMatches(args[0], PotatoWarp.getWarps().keySet(), completions);
                 }

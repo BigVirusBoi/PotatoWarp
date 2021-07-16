@@ -13,7 +13,7 @@ public class MenuListener implements Listener {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) return;
             Menu menu = (Menu) holder;
-            menu.handleMenu(e);
+            menu.handle(e);
         }
     }
 }

@@ -1,4 +1,4 @@
-package me.bigvirusboi.potatowarp.util;
+package me.bigvirusboi.potatowarp.warp;
 
 public class ReplaceString {
     private final String regex;

@@ -1,8 +1,10 @@
 package me.bigvirusboi.potatowarp.commands;
 
-import me.bigvirusboi.potatowarp.util.Messages;
+import me.bigvirusboi.potatowarp.data.Permissions;
+import me.bigvirusboi.potatowarp.warp.Warp;
+import me.bigvirusboi.potatowarp.data.Messages;
 import me.bigvirusboi.potatowarp.PotatoWarp;
-import me.bigvirusboi.potatowarp.util.ReplaceString;
+import me.bigvirusboi.potatowarp.warp.ReplaceString;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,7 +24,15 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
             if (args.length > 0) {
                 String id = args[0];
                 if (PotatoWarp.getWarps().containsKey(id)) {
-                    PotatoWarp.getWarps().get(id).warpPlayer(player);
+                    if (PotatoWarp.getWarps().get(id).isRestricted()) {
+                        if (player.hasPermission(Permissions.WARP_RESTRICTED)) {
+                            PotatoWarp.getWarps().get(id).warpPlayer(player);
+                        } else {
+                            Messages.sendMessage(player, Messages.WARP_RESTRICTED, new ReplaceString("warp", id));
+                        }
+                    } else {
+                        PotatoWarp.getWarps().get(id).warpPlayer(player);
+                    }
                 } else Messages.sendMessage(player, Messages.WARP_NOT_EXISTING, new ReplaceString("warp", id));
             } else Messages.sendMessage(player, Messages.SPECIFY_NAME);
         } else {
@@ -37,9 +47,19 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
             List<String> completions = new ArrayList<>();
 
             Player player = (Player) sender;
-            if (player.hasPermission("potatowarp.warp")) {
+            if (player.hasPermission(Permissions.WARP)) {
                 if (args.length == 1) {
-                    StringUtil.copyPartialMatches(args[0], PotatoWarp.getWarps().keySet(), completions);
+                    List<String> arguments = new ArrayList<>();
+                    for (Warp warp : PotatoWarp.getWarps().values()) {
+                        if (!warp.isRestricted()) {
+                            arguments.add(warp.getId());
+                            continue;
+                        }
+                        if (warp.isRestricted() && player.hasPermission("potatowarp.warp.restricted")) {
+                            arguments.add(warp.getId());
+                        }
+                    }
+                    StringUtil.copyPartialMatches(args[0], arguments, completions);
                 }
                 Collections.sort(completions);
                 return completions;

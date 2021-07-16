@@ -1,11 +1,10 @@
 package me.bigvirusboi.potatowarp.menu;
 
-import me.bigvirusboi.potatowarp.Warp;
+import me.bigvirusboi.potatowarp.warp.Warp;
 import me.bigvirusboi.potatowarp.menu.system.Menu;
-import me.bigvirusboi.potatowarp.menu.system.PlayerMenuUtility;
-import me.bigvirusboi.potatowarp.util.Messages;
-import me.bigvirusboi.potatowarp.util.ReplaceString;
-import me.bigvirusboi.potatowarp.util.WarpUtils;
+import me.bigvirusboi.potatowarp.data.Messages;
+import me.bigvirusboi.potatowarp.warp.ReplaceString;
+import me.bigvirusboi.potatowarp.warp.WarpUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -14,23 +13,23 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class DeleteWarpMenu extends Menu {
     private final Warp warp;
 
-    public DeleteWarpMenu(PlayerMenuUtility pmu, Warp warp) {
-        super(pmu);
+    public DeleteWarpMenu(Player player, Warp warp) {
+        super(player);
         this.warp = warp;
     }
 
     @Override
-    public String getMenuName() {
+    public String getName() {
         return "Deleting Warp » " + warp.getId();
     }
 
     @Override
-    public int getSlots() {
-        return 27;
+    public int getRows() {
+        return 3;
     }
 
     @Override
-    public void handleMenu(InventoryClickEvent e) {
+    public void handle(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
 
         if (e.getCurrentItem() == null) return;
@@ -47,13 +46,13 @@ public class DeleteWarpMenu extends Menu {
             case LIME_CONCRETE:
             case BOOK:
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
-                new EditWarpMenu(pmu, warp).open();
+                new EditWarpMenu(player, warp).open();
                 break;
         }
     }
 
     @Override
-    public void setMenuItems() {
+    public void setItems() {
         inventory.setItem(13, WarpUtils.createWarpItem(warp, false, false));
         inventory.setItem(11, makeItem(Material.LIME_CONCRETE, "§a§lDON'T DELETE"));
         inventory.setItem(15, makeItem(Material.RED_CONCRETE, "§c§lDELETE"));
