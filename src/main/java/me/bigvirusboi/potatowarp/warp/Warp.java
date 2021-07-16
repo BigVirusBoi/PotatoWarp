@@ -73,19 +73,14 @@ public class Warp {
         }
     }
 
-    // TODO when warping between worlds, no particles are shown...
     public void forceWarp(Player player) {
         Messages.sendMessage(player, Messages.WARP, new ReplaceString("warp", id));
         player.teleport(location);
+        player.playSound(location, Sound.ENTITY_ENDERMAN_TELEPORT, .5f, 1f);
         Bukkit.getScheduler().runTaskLater(PotatoWarp.getInstance(), () -> {
-            Location loc = player.getLocation();
-            double x = loc.getX();
-            double y = loc.getY();
-            double z = loc.getZ();
-            player.playSound(loc, Sound.ENTITY_ENDERMAN_TELEPORT, .5f, 1f);
             if (Config.WARP_PARTICLES) {
-                player.getWorld().spawnParticle(Particle.REVERSE_PORTAL, x, y, z, 200, 0, 0, 0, 1);
+                location.getWorld().spawnParticle(Particle.REVERSE_PORTAL, location, 200, 0, 0, 0, 1);
             }
-        }, 1);
+        }, 10);
     }
 }
