@@ -42,6 +42,14 @@ public class WarpUtils {
         PotatoWarp.getWarps().put(id, new Warp(id, loc));
     }
 
+    public static void saveWarp(Warp warp) {
+        YamlConfiguration yml = FileManager.getWarpsConfig();
+        ConfigurationSection sec = getOrCreateSection(yml, "Warps");
+        ConfigurationSection section = sec.createSection(warp.getId());
+        section.set("location", locToString(warp.getLocation()));
+        FileManager.saveFile(yml);
+    }
+
     public static void deleteWarp(String id) {
         YamlConfiguration yml = FileManager.getWarpsConfig();
         ConfigurationSection sec = getOrCreateSection(yml, "Warps");

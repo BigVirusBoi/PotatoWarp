@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 public class Warp {
     private final String id;
-    private final Location location;
+    private Location location;
 
     public Warp(String id, Location location) {
         this.id = id;
@@ -18,6 +18,14 @@ public class Warp {
 
     public String getId() {
         return id;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public void warpPlayer(Player player) {

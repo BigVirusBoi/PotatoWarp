@@ -6,7 +6,6 @@ public class Config {
     }
 
     public static int warpDelay() {
-        System.out.println(Math.max(PotatoWarp.getInstance().getConfig().getInt("warp-delay"), 0));
         return Math.max(PotatoWarp.getInstance().getConfig().getInt("warp-delay"), 0);
     }
 

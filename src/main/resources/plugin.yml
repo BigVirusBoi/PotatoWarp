@@ -11,18 +11,16 @@ commands:
   warps:
     permission: potatowarp.warps
     description: The command used to list all warps
-    aliases:
-      - listwarps
-      - warplist
   setwarp:
     permission: potatowarp.setwarp
     description: The command used to create a warp
     aliases:
       - addwarp
-      - createwarp
   delwarp:
     permission: potatowarp.delwarp
     description: The command used to delete a warp
     aliases:
       - removewarp
-      - deletewarp
+  movewarp:
+    permission: potatowarp.movewarp
+    description: The command used to move a warp

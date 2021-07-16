@@ -11,6 +11,7 @@ public class Messages {
     public static final String NAME_INVALID = "message.name_invalid";
     public static final String WARP_CREATED = "message.warp_created";
     public static final String WARP_DELETED = "message.warp_deleted";
+    public static final String WARP_MOVED = "message.warp_moved";
     public static final String WARP_NOT_EXISTING = "message.warp_not_existing";
     public static final String WARP_EXISTS = "message.warp_exists";
     public static final String WARP_DELAY = "message.warp_delay";

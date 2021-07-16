@@ -8,6 +8,7 @@ message.specify_warp_name: §cPlease specify a warp name!
 message.name_invalid: §cName §e§n%name%§c is invalid!
 message.warp_created: §aWarp §e§n%warp%§a has been created!
 message.warp_deleted: §aWarp §e§n%warp%§a has been deleted!
+message.warp_moved: §aWarp §e§n%warp%§a has been moved!
 message.warp_not_existing: §cWarp §e§n%warp%§c does not exist!
 message.warp_exists: §cWarp §e§n%warp%§c already exists
 message.warp_delay: §bWarping to §3§n%warp%§b in §3§n%time%s
