@@ -2,6 +2,7 @@ package me.bigvirusboi.potatowarp.commands;
 
 import me.bigvirusboi.potatowarp.util.Messages;
 import me.bigvirusboi.potatowarp.PotatoWarp;
+import me.bigvirusboi.potatowarp.util.ReplaceString;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,7 +23,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                 String id = args[0];
                 if (PotatoWarp.getWarps().containsKey(id)) {
                     PotatoWarp.getWarps().get(id).warpPlayer(player);
-                } else Messages.sendMessage(player, Messages.WARP_NOT_EXISTING, id);
+                } else Messages.sendMessage(player, Messages.WARP_NOT_EXISTING, new ReplaceString("warp", id));
             } else Messages.sendMessage(player, Messages.SPECIFY_NAME);
         } else {
             sender.sendMessage(Messages.PLAYERS_ONLY);

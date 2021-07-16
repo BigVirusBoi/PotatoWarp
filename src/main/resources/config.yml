@@ -1,15 +1,15 @@
 ### Options
 # How much to delay a warp before actually warping (in seconds) (0=no delay)
-warp-delay: 2
+warp-delay: 0
 
 ### Messages
 prefix: §3[§b§lPotatoWarp§3]
 message.specify_warp_name: §cPlease specify a warp name!
-message.name_invalid: §cName §e§n%s§c is invalid!
-message.warp_created: §aWarp §e§n%s§a has been created!
-message.warp_deleted: §aWarp §e§n%s§a has been deleted!
-message.warp_not_existing: §cWarp §e§n%s§c does not exist!
-message.warp_exists: §cWarp §e§n%s§c already exists
-message.warp_delay: §bWarping to §3§n%s§b in §3§n%ss
-message.warp: §bWarped to §3§n%s
+message.name_invalid: §cName §e§n%name%§c is invalid!
+message.warp_created: §aWarp §e§n%warp%§a has been created!
+message.warp_deleted: §aWarp §e§n%warp%§a has been deleted!
+message.warp_not_existing: §cWarp §e§n%warp%§c does not exist!
+message.warp_exists: §cWarp §e§n%warp%§c already exists
+message.warp_delay: §bWarping to §3§n%warp%§b in §3§n%time%s
+message.warp: §bWarped to §3§n%warp%
 message.cancel_warp: §c§lCancelled warp

@@ -2,6 +2,7 @@ package me.bigvirusboi.potatowarp.commands;
 
 import me.bigvirusboi.potatowarp.util.Messages;
 import me.bigvirusboi.potatowarp.PotatoWarp;
+import me.bigvirusboi.potatowarp.util.ReplaceString;
 import me.bigvirusboi.potatowarp.util.WarpUtils;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -20,9 +21,9 @@ public class SetWarpCommand implements CommandExecutor {
                     if (!PotatoWarp.getWarps().containsKey(id)) {
                         WarpUtils.createWarp(id, player.getLocation());
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
-                        Messages.sendMessage(player, Messages.WARP_CREATED, id);
-                    } else Messages.sendMessage(player, Messages.WARP_EXISTS, id);
-                } else Messages.sendMessage(player, Messages.NAME_INVALID, id);
+                        Messages.sendMessage(player, Messages.WARP_CREATED, new ReplaceString("warp", id));
+                    } else Messages.sendMessage(player, Messages.WARP_EXISTS, new ReplaceString("warp", id));
+                } else Messages.sendMessage(player, Messages.NAME_INVALID, new ReplaceString("warp", id));
             } else Messages.sendMessage(player, Messages.SPECIFY_NAME);
         } else {
             sender.sendMessage(Messages.PLAYERS_ONLY);

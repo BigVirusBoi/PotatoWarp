@@ -1,6 +1,7 @@
 package me.bigvirusboi.potatowarp;
 
 import me.bigvirusboi.potatowarp.util.Messages;
+import me.bigvirusboi.potatowarp.util.ReplaceString;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -22,7 +23,7 @@ public class Warp {
     public void warpPlayer(Player player) {
         if (!PotatoWarp.getInstance().isWarping(player)) {
             if (Config.shouldDelayWarp()) {
-                Messages.sendMessage(player, Messages.WARP_DELAY, id, Config.warpDelay());
+                Messages.sendMessage(player, Messages.WARP_DELAY, new ReplaceString("warp", id), new ReplaceString("time", Config.warpDelay()));
                 PotatoWarp.getInstance().addWarpingPlayer(player, this);
             } else {
                 forceWarp(player);
@@ -33,7 +34,7 @@ public class Warp {
     }
 
     public void forceWarp(Player player) {
-        Messages.sendMessage(player, Messages.WARP, id);
+        Messages.sendMessage(player, Messages.WARP, new ReplaceString("warp", id));
         player.teleport(location);
         Bukkit.getScheduler().runTaskLater(PotatoWarp.getInstance(), () -> player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, .5f, 1f), 1);
     }

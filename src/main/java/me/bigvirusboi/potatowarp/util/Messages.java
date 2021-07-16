@@ -19,12 +19,13 @@ public class Messages {
 
     public static final String ERROR = "§cAn unexpected error occurred";
 
-    public static void sendMessage(Player player, String name, Object... args) {
+    public static void sendMessage(Player player, String name, ReplaceString... args) {
         String string = PotatoWarp.getInstance().getConfig().getString(name);
         if (string != null) {
-            if (args.length == 0) {
-                player.sendMessage(PREFIX + " §r" + string);
-            } else player.sendMessage(String.format(PREFIX + " §r" + string, args));
+            for (ReplaceString s : args) {
+                string = string.replaceAll("%" + s.getRegex() + "%", String.valueOf(s.getReplacement()));
+            }
+            player.sendMessage(PREFIX + " §r" + string);
         } else player.sendMessage("§cAn unexpected error occurred");
     }
 }
