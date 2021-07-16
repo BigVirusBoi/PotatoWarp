@@ -1,6 +1,10 @@
 ### Options
-# How much to delay a warp before actually warping (seconds) (0=no delay)
+# How much to delay a warp before warping (seconds) (0=no delay)
 warp-delay: 0
+# Spawns particles when warping
+warp-particles: true
+# Spawns particles when preparing to warp
+prepare-warp-particles: true
 
 ### Messages
 prefix: §b§lPotatoWarp §8»

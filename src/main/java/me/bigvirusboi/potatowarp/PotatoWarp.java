@@ -1,13 +1,13 @@
 package me.bigvirusboi.potatowarp;
 
 import me.bigvirusboi.potatowarp.commands.*;
-import me.bigvirusboi.potatowarp.data.Config;
 import me.bigvirusboi.potatowarp.menu.system.MenuListener;
 import me.bigvirusboi.potatowarp.data.FileManager;
 import me.bigvirusboi.potatowarp.data.Messages;
 import me.bigvirusboi.potatowarp.warp.Warp;
 import me.bigvirusboi.potatowarp.warp.WarpUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,6 +25,9 @@ public final class PotatoWarp extends JavaPlugin {
         instance = this;
 
         saveDefaultConfig();
+
+        Config.readConfig();
+
         FileManager.setup();
         WarpUtils.readWarps();
 
@@ -46,6 +49,9 @@ public final class PotatoWarp extends JavaPlugin {
 
     public void warpPlayers() {
         for (Player player : PLAYER_TIME.keySet()) {
+            if (Config.PREPARE_WARP_PARTICLES) {
+                player.getWorld().spawnParticle(Particle.PORTAL, player.getLocation(), 25, 0, 0, 0, 3);
+            }
             if (PLAYER_TIME.get(player) <= System.currentTimeMillis()) {
                 PLAYER_WARP.get(player).forceWarp(player);
                 PLAYER_TIME.remove(player);

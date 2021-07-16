@@ -1,12 +1,9 @@
 package me.bigvirusboi.potatowarp.warp;
 
 import me.bigvirusboi.potatowarp.PotatoWarp;
-import me.bigvirusboi.potatowarp.data.Config;
+import me.bigvirusboi.potatowarp.Config;
 import me.bigvirusboi.potatowarp.data.Messages;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 public class Warp {
@@ -66,7 +63,7 @@ public class Warp {
     public void warpPlayer(Player player) {
         if (!PotatoWarp.getInstance().isWarping(player)) {
             if (Config.shouldDelayWarp()) {
-                Messages.sendMessage(player, Messages.WARP_DELAY, new ReplaceString("warp", id), new ReplaceString("time", Config.warpDelay()));
+                Messages.sendMessage(player, Messages.WARP_DELAY, new ReplaceString("warp", id), new ReplaceString("time", Config.WARP_DELAY));
                 PotatoWarp.getInstance().addWarpingPlayer(player, this);
             } else {
                 forceWarp(player);
@@ -76,9 +73,19 @@ public class Warp {
         }
     }
 
+    // TODO when warping between worlds, no particles are shown...
     public void forceWarp(Player player) {
         Messages.sendMessage(player, Messages.WARP, new ReplaceString("warp", id));
         player.teleport(location);
-        Bukkit.getScheduler().runTaskLater(PotatoWarp.getInstance(), () -> player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, .5f, 1f), 1);
+        Bukkit.getScheduler().runTaskLater(PotatoWarp.getInstance(), () -> {
+            Location loc = player.getLocation();
+            double x = loc.getX();
+            double y = loc.getY();
+            double z = loc.getZ();
+            player.playSound(loc, Sound.ENTITY_ENDERMAN_TELEPORT, .5f, 1f);
+            if (Config.WARP_PARTICLES) {
+                player.getWorld().spawnParticle(Particle.REVERSE_PORTAL, x, y, z, 200, 0, 0, 0, 1);
+            }
+        }, 1);
     }
 }
