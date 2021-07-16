@@ -37,9 +37,7 @@ public class WarpUtils {
 
     public static void createWarp(String id, Location loc, String mat) {
         Material icon = Material.getMaterial(mat.toUpperCase());
-        if (icon != null) {
-            createWarp(id, loc, icon);
-        } else createWarp(id, loc, Material.CLAY_BALL);
+        createWarp(id, loc, Objects.requireNonNullElse(icon, Material.CLAY_BALL));
     }
 
     public static void createWarp(String id, Location loc, Material icon) {

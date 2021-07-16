@@ -13,6 +13,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -56,6 +57,9 @@ public class WarpsMenu extends Menu {
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
                 }
             }
+        } else if (e.getSlot() == 49) {
+            // TODO PermissionMenu for viewing permissions
+            player.closeInventory();
         } else {
             ItemMeta meta = e.getCurrentItem().getItemMeta();
             if (meta != null) {
@@ -83,25 +87,31 @@ public class WarpsMenu extends Menu {
         }
     }
 
-    public void addMenuBorder() {
+    @Override
+    public void setItems() {
         for (int i = 0; i < 9; i++) {
             inventory.setItem(45 + i, makeItem(Material.BLACK_STAINED_GLASS_PANE, "§r"));
         }
 
+        List<String> lore = new ArrayList<>();
+        ItemStack infoStack = makeItem(Material.BOOK, "§e§lINFO");
+        lore.add("§7Click to warp");
+        if (player.hasPermission(Permissions.QUICK_WARP)) lore.add("§7Shift-Click to quick warp (skip delay)");
         if (player.hasPermission(Permissions.EDIT_WARP)) {
-            inventory.setItem(49, makeItem(Material.BOOK, "§e§lINFO", "§7Click to warp", "§7Shift-Click to quick warp (skip delay)", "§7Middle click to edit"));
+            lore.add("§7Middle click to edit");
+            lore.add("");
+            lore.add("§e→ Click to view permissions");
         }
+        ItemMeta infoMeta = infoStack.getItemMeta();
+        infoMeta.setLore(lore);
+        infoStack.setItemMeta(infoMeta);
+
+        inventory.setItem(49, infoStack);
 
         if (page != 0) inventory.setItem(46, makeItem(Material.ARROW, ChatColor.GREEN + "Previous Page"));
         if ((45 * (page + 1) < PotatoWarp.getWarps().size())) inventory.setItem(52, makeItem(Material.ARROW, ChatColor.GREEN + "Next Page"));
-    }
-
-    @Override
-    public void setItems() {
-        addMenuBorder();
 
         List<Warp> list = new ArrayList<>(PotatoWarp.getWarps().values());
-
         if (!list.isEmpty()) {
             for (int i = 0; i < 45; i++) {
                 index = 45 * page + i;

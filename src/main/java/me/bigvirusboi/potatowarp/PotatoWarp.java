@@ -2,10 +2,8 @@ package me.bigvirusboi.potatowarp;
 
 import me.bigvirusboi.potatowarp.commands.*;
 import me.bigvirusboi.potatowarp.menu.system.MenuListener;
-import me.bigvirusboi.potatowarp.data.FileManager;
-import me.bigvirusboi.potatowarp.data.Messages;
-import me.bigvirusboi.potatowarp.warp.Warp;
-import me.bigvirusboi.potatowarp.warp.WarpUtils;
+import me.bigvirusboi.potatowarp.data.*;
+import me.bigvirusboi.potatowarp.warp.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
