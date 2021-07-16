@@ -64,10 +64,10 @@ public class WarpsMenu extends Menu {
                     Warp warp = WarpUtils.getWarp(id);
                     if (warp != null) {
                         ClickType type = e.getClick();
-                        if (type == ClickType.MIDDLE) {
+                        if (type == ClickType.MIDDLE && player.hasPermission(Permissions.EDIT_WARP)) {
                             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
                             new EditWarpMenu(player, warp).open();
-                        } else if (type.isShiftClick()) {
+                        } else if (type.isShiftClick() && player.hasPermission(Permissions.QUICK_WARP)) {
                             warp.forceWarp(player);
                             player.closeInventory();
                         } else {
@@ -88,7 +88,9 @@ public class WarpsMenu extends Menu {
             inventory.setItem(45 + i, makeItem(Material.BLACK_STAINED_GLASS_PANE, "§r"));
         }
 
-        inventory.setItem(49, makeItem(Material.BOOK, "§e§lINFO", "§7Click to warp", "§7Shift-Click to quick warp (skip delay)", "§7Middle click to edit"));
+        if (player.hasPermission(Permissions.EDIT_WARP)) {
+            inventory.setItem(49, makeItem(Material.BOOK, "§e§lINFO", "§7Click to warp", "§7Shift-Click to quick warp (skip delay)", "§7Middle click to edit"));
+        }
 
         if (page != 0) inventory.setItem(46, makeItem(Material.ARROW, ChatColor.GREEN + "Previous Page"));
         if ((45 * (page + 1) < PotatoWarp.getWarps().size())) inventory.setItem(52, makeItem(Material.ARROW, ChatColor.GREEN + "Next Page"));

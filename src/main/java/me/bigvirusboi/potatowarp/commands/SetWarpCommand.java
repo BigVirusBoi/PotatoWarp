@@ -51,7 +51,7 @@ public class SetWarpCommand implements CommandExecutor, TabCompleter {
             List<String> completions = new ArrayList<>();
 
             Player player = (Player) sender;
-            if (player.hasPermission(Permissions.SETWARP)) {
+            if (player.hasPermission(Permissions.CREATE_WARP)) {
                 if (args.length == 2) {
                     StringUtil.copyPartialMatches(args[1], Arrays.stream(Material.values()).map(Material::name).map(String::toLowerCase).collect(Collectors.toList()), completions);
                 }

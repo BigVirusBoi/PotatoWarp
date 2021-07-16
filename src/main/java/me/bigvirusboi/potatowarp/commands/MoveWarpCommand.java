@@ -45,7 +45,7 @@ public class MoveWarpCommand implements CommandExecutor, TabCompleter {
             List<String> completions = new ArrayList<>();
 
             Player player = (Player) sender;
-            if (player.hasPermission(Permissions.MOVEWARP)) {
+            if (player.hasPermission(Permissions.MOVE_WARP)) {
                 if (args.length == 1) {
                     StringUtil.copyPartialMatches(args[0], PotatoWarp.getWarps().keySet(), completions);
                 }

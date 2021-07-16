@@ -35,7 +35,7 @@ public class EditWarpMenu extends Menu {
         if (e.getSlot() == 13) return;
 
         switch (e.getCurrentItem().getType()) {
-            case RED_CONCRETE:
+            case BARRIER:
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
                 new DeleteWarpMenu(player, warp).open();
                 break;
@@ -60,6 +60,14 @@ public class EditWarpMenu extends Menu {
 
     @Override
     public void setItems() {
+        for (int i = 0; i < 9; i++) {
+            inventory.setItem(i, makeItem(Material.BLACK_STAINED_GLASS_PANE, "§r"));
+            inventory.setItem(36 + i, makeItem(Material.BLACK_STAINED_GLASS_PANE, "§r"));
+        }
+        for (int i = 0; i < 27; i++) {
+            inventory.setItem(9 + i, makeItem(Material.GRAY_STAINED_GLASS_PANE, "§r"));
+        }
+
         inventory.setItem(13, WarpUtils.createWarpItem(warp, false, false));
         if (warp.isGlowing()) {
             inventory.setItem(29, makeItem(Material.GLOW_INK_SAC, "§a§lGLOWING » ON", "§7This will make the warp item glow!"));
@@ -71,7 +79,7 @@ public class EditWarpMenu extends Menu {
         } else {
             inventory.setItem(33, makeItem(Material.ANVIL, "§c§lRESTRICTED » OFF", "§7This will make the warp restricted!", "§7(Only admins can access)"));
         }
-        inventory.setItem(31, makeItem(Material.RED_CONCRETE, "§c§lDELETE WARP", "§7This will permanently delete this warp!"));
+        inventory.setItem(31, makeItem(Material.BARRIER, "§c§lDELETE WARP", "§7This will permanently delete this warp!"));
         inventory.setItem(36, makeItem(Material.BOOK, "§eBack"));
     }
 }

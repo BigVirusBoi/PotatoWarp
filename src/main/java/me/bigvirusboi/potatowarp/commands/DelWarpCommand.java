@@ -42,7 +42,7 @@ public class DelWarpCommand implements CommandExecutor, TabExecutor {
             List<String> completions = new ArrayList<>();
 
             Player player = (Player) sender;
-            if (player.hasPermission(Permissions.DELWARP)) {
+            if (player.hasPermission(Permissions.DELETE_WARP)) {
                 if (args.length == 1) {
                     StringUtil.copyPartialMatches(args[0], PotatoWarp.getWarps().keySet(), completions);
                 }
