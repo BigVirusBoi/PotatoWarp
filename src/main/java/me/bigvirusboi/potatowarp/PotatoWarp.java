@@ -35,6 +35,7 @@ public final class PotatoWarp extends JavaPlugin {
         getCommand("warp").setTabCompleter(new WarpCommand());
         getCommand("warps").setExecutor(new WarpsCommand());
         getCommand("setwarp").setExecutor(new SetWarpCommand());
+        getCommand("setwarp").setTabCompleter(new SetWarpCommand());
         getCommand("delwarp").setExecutor(new DelWarpCommand());
         getCommand("delwarp").setTabCompleter(new DelWarpCommand());
         getCommand("movewarp").setExecutor(new MoveWarpCommand());

@@ -8,19 +8,24 @@ commands:
   warp:
     permission: potatowarp.warp
     description: The command used to warp
+    usage: /warp <name> <icon>
   warps:
     permission: potatowarp.warps
     description: The command used to list all warps
+    usage: /warps
   setwarp:
     permission: potatowarp.setwarp
     description: The command used to create a warp
+    usage: /setwarp <name>
     aliases:
       - addwarp
   delwarp:
     permission: potatowarp.delwarp
     description: The command used to delete a warp
+    usage: /delwarp <name>
     aliases:
       - removewarp
   movewarp:
     permission: potatowarp.movewarp
     description: The command used to move a warp
+    usage: /movewarp <name>

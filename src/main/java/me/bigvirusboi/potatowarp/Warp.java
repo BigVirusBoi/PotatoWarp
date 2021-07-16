@@ -4,16 +4,19 @@ import me.bigvirusboi.potatowarp.util.Messages;
 import me.bigvirusboi.potatowarp.util.ReplaceString;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class Warp {
     private final String id;
     private Location location;
+    private Material icon;
 
-    public Warp(String id, Location location) {
+    public Warp(String id, Location location, Material icon) {
         this.id = id;
         this.location = location;
+        this.icon = icon;
     }
 
     public String getId() {
@@ -24,8 +27,16 @@ public class Warp {
         return location;
     }
 
+    public Material getIcon() {
+        return icon;
+    }
+
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public void setIcon(Material icon) {
+        this.icon = icon;
     }
 
     public void warpPlayer(Player player) {

@@ -2,12 +2,15 @@ package me.bigvirusboi.potatowarp.util;
 
 import me.bigvirusboi.potatowarp.PotatoWarp;
 import me.bigvirusboi.potatowarp.Warp;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,20 +36,27 @@ public class WarpUtils {
         PotatoWarp.getWarps().putAll(warps);
     }
 
-    public static void createWarp(String id, Location loc) {
+    public static void createWarp(String id, Location loc, String mat) {
+        Material icon = Material.getMaterial(mat.toUpperCase());
+        if (icon != null) {
+            createWarp(id, loc, icon);
+        } else createWarp(id, loc, Material.CLAY_BALL);
+    }
+
+    public static void createWarp(String id, Location loc, Material icon) {
         YamlConfiguration yml = FileManager.getWarpsConfig();
-        ConfigurationSection sec = getOrCreateSection(yml, "Warps");
-        ConfigurationSection section = sec.createSection(id);
-        section.set("location", locToString(loc));
+        ConfigurationSection sec = getOrCreateSection(yml, "Warps." + id);
+        sec.set("location", locToString(loc));
+        sec.set("icon", icon.name());
         FileManager.saveFile(yml);
-        PotatoWarp.getWarps().put(id, new Warp(id, loc));
+        PotatoWarp.getWarps().put(id, new Warp(id, loc, icon));
     }
 
     public static void saveWarp(Warp warp) {
         YamlConfiguration yml = FileManager.getWarpsConfig();
-        ConfigurationSection sec = getOrCreateSection(yml, "Warps");
-        ConfigurationSection section = sec.createSection(warp.getId());
-        section.set("location", locToString(warp.getLocation()));
+        ConfigurationSection sec = getOrCreateSection(yml, "Warps." + warp.getId());
+        sec.set("location", locToString(warp.getLocation()));
+        sec.set("icon", warp.getIcon().name());
         FileManager.saveFile(yml);
     }
 
@@ -64,7 +74,14 @@ public class WarpUtils {
         if (location != null) {
             Location loc = locFromString(location);
             if (loc != null) {
-                return new Warp(id, loc);
+                String iconName = sec.getString("icon");
+                if (iconName != null) {
+                    Material icon = Material.getMaterial(iconName);
+                    if (icon != null) {
+                        return new Warp(id, loc, icon);
+                    }
+                }
+                return new Warp(id, loc, Material.CLAY_BALL);
             }
         }
         return null;
@@ -110,5 +127,15 @@ public class WarpUtils {
         if (sec != null) {
             return sec;
         } else return yml.createSection(path);
+    }
+
+    public static ItemStack createWarpItem(Warp warp, boolean hasLore, boolean hasId) {
+        ItemStack stack = new ItemStack(warp.getIcon(), 1);
+        ItemMeta meta = stack.getItemMeta();
+        meta.setDisplayName("§b§n" + warp.getId());
+        if (hasLore) meta.setLore(Collections.singletonList("§eClick to warp!"));
+        if (hasId) meta.getPersistentDataContainer().set(new NamespacedKey(PotatoWarp.getInstance(), "id"), PersistentDataType.STRING, warp.getId());
+        stack.setItemMeta(meta);
+        return stack;
     }
 }

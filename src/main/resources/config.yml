@@ -1,5 +1,5 @@
 ### Options
-# How much to delay a warp before actually warping (in seconds) (0=no delay)
+# How much to delay a warp before actually warping (seconds) (0=no delay)
 warp-delay: 0
 
 ### Messages

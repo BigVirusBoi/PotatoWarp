@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -42,33 +43,45 @@ public class WarpsMenu extends Menu {
         Player player = (Player) e.getWhoClicked();
 
         if (e.getCurrentItem() == null) return;
-        switch (e.getCurrentItem().getType()) {
-            case CLAY_BALL:
-                String id = e.getCurrentItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(PotatoWarp.getInstance(), "id"), PersistentDataType.STRING);
-                Warp warp = WarpUtils.getWarp(id);
-                if (warp != null) {
-                    warp.warpPlayer(player);
-                } else {
-                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 0f);
-                    player.sendMessage(Messages.ERROR);
+
+        if (e.getCurrentItem().getType() == Material.ARROW) {
+            if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Previous Page")) {
+                if (page != 0) {
+                    page = page - 1;
+                    super.open();
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
                 }
-                player.closeInventory();
-                break;
-            case ARROW:
-                if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Previous Page")) {
-                    if (page != 0) {
-                        page = page - 1;
-                        super.open();
-                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
-                    }
-                } else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")) {
-                    if (!((index + 1) >= PotatoWarp.getWarps().size())) {
-                        page = page + 1;
-                        super.open();
-                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
+            } else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")) {
+                if (!((index + 1) >= PotatoWarp.getWarps().size())) {
+                    page = page + 1;
+                    super.open();
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
+                }
+            }
+        } else {
+            ItemMeta meta = e.getCurrentItem().getItemMeta();
+            if (meta != null) {
+                String id = meta.getPersistentDataContainer().get(new NamespacedKey(PotatoWarp.getInstance(), "id"), PersistentDataType.STRING);
+                if (id != null) {
+                    Warp warp = WarpUtils.getWarp(id);
+                    if (warp != null) {
+                        ClickType type = e.getClick();
+                        if (type == ClickType.MIDDLE) {
+                            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 0f);
+                            new EditWarpMenu(pmu, warp).open();
+                        } else if (type.isShiftClick()) {
+                            warp.forceWarp(player);
+                            player.closeInventory();
+                        } else {
+                            warp.warpPlayer(player);
+                            player.closeInventory();
+                        }
+                    } else {
+                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 0f);
+                        player.sendMessage(Messages.ERROR);
                     }
                 }
-                break;
+            }
         }
     }
 
@@ -76,6 +89,8 @@ public class WarpsMenu extends Menu {
         for (int i = 0; i < 9; i++) {
             inventory.setItem(45 + i, makeItem(Material.BLACK_STAINED_GLASS_PANE, "§r"));
         }
+
+        inventory.setItem(49, makeItem(Material.BOOK, "§e§lINFO", "§7Click to warp", "§7Shift-Click to quick warp (skip delay)", "§7Middle click to edit"));
 
         if (page != 0) inventory.setItem(46, makeItem(Material.ARROW, ChatColor.GREEN + "Previous Page"));
         if ((45 * (page + 1) < PotatoWarp.getWarps().size())) inventory.setItem(52, makeItem(Material.ARROW, ChatColor.GREEN + "Next Page"));
@@ -93,13 +108,7 @@ public class WarpsMenu extends Menu {
                 if (index >= list.size()) break;
 
                 Warp warp = list.get(i);
-                ItemStack is = makeItem(Material.CLAY_BALL, "§b§n" + warp.getId(), "", "§eClick to warp");
-
-                ItemMeta im = is.getItemMeta();
-                im.getPersistentDataContainer().set(new NamespacedKey(PotatoWarp.getInstance(), "id"), PersistentDataType.STRING, warp.getId());
-                is.setItemMeta(im);
-
-                inventory.addItem(is);
+                inventory.addItem(WarpUtils.createWarpItem(warp, true, true));
             }
         }
     }
