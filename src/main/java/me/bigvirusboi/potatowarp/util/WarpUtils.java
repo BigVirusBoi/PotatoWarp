@@ -5,11 +5,12 @@ import me.bigvirusboi.potatowarp.Warp;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,8 +49,9 @@ public class WarpUtils {
         ConfigurationSection sec = getOrCreateSection(yml, "Warps." + id);
         sec.set("location", locToString(loc));
         sec.set("icon", icon.name());
+        sec.set("glowing", false);
         FileManager.saveFile(yml);
-        PotatoWarp.getWarps().put(id, new Warp(id, loc, icon));
+        PotatoWarp.getWarps().put(id, new Warp(id, loc, icon, false));
     }
 
     public static void saveWarp(Warp warp) {
@@ -57,7 +59,9 @@ public class WarpUtils {
         ConfigurationSection sec = getOrCreateSection(yml, "Warps." + warp.getId());
         sec.set("location", locToString(warp.getLocation()));
         sec.set("icon", warp.getIcon().name());
+        sec.set("glowing", warp.isGlowing());
         FileManager.saveFile(yml);
+        PotatoWarp.getWarps().replace(warp.getId(), warp);
     }
 
     public static void deleteWarp(String id) {
@@ -78,10 +82,11 @@ public class WarpUtils {
                 if (iconName != null) {
                     Material icon = Material.getMaterial(iconName);
                     if (icon != null) {
-                        return new Warp(id, loc, icon);
+                        boolean glowing = sec.getBoolean("glowing");
+                        return new Warp(id, loc, icon, glowing);
                     }
                 }
-                return new Warp(id, loc, Material.CLAY_BALL);
+                return new Warp(id, loc, Material.CLAY_BALL, false);
             }
         }
         return null;
@@ -133,6 +138,10 @@ public class WarpUtils {
         ItemStack stack = new ItemStack(warp.getIcon(), 1);
         ItemMeta meta = stack.getItemMeta();
         meta.setDisplayName("§b§n" + warp.getId());
+        if (warp.isGlowing()) {
+            meta.addEnchant(Enchantment.THORNS, 1, true);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
         if (hasLore) meta.setLore(Collections.singletonList("§eClick to warp!"));
         if (hasId) meta.getPersistentDataContainer().set(new NamespacedKey(PotatoWarp.getInstance(), "id"), PersistentDataType.STRING, warp.getId());
         stack.setItemMeta(meta);

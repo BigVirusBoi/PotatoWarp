@@ -3,28 +3,30 @@ package me.bigvirusboi.potatowarp.menu;
 import me.bigvirusboi.potatowarp.Warp;
 import me.bigvirusboi.potatowarp.menu.system.Menu;
 import me.bigvirusboi.potatowarp.menu.system.PlayerMenuUtility;
+import me.bigvirusboi.potatowarp.util.Messages;
+import me.bigvirusboi.potatowarp.util.ReplaceString;
 import me.bigvirusboi.potatowarp.util.WarpUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class EditWarpMenu extends Menu {
+public class DeleteWarpMenu extends Menu {
     private final Warp warp;
 
-    public EditWarpMenu(PlayerMenuUtility pmu, Warp warp) {
+    public DeleteWarpMenu(PlayerMenuUtility pmu, Warp warp) {
         super(pmu);
         this.warp = warp;
     }
 
     @Override
     public String getMenuName() {
-        return "Edit Warp » " + warp.getId();
+        return "Deleting Warp » " + warp.getId();
     }
 
     @Override
     public int getSlots() {
-        return 45;
+        return 27;
     }
 
     @Override
@@ -37,18 +39,15 @@ public class EditWarpMenu extends Menu {
 
         switch (e.getCurrentItem().getType()) {
             case RED_CONCRETE:
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
-                new DeleteWarpMenu(pmu, warp).open();
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
+                WarpUtils.deleteWarp(warp.getId());
+                Messages.sendMessage(player, Messages.WARP_DELETED, new ReplaceString("warp", warp.getId()));
+                player.closeInventory();
                 break;
+            case LIME_CONCRETE:
             case BOOK:
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
-                new WarpsMenu(pmu).open();
-                break;
-            case GLOW_INK_SAC:
-                warp.setGlowing(!warp.isGlowing());
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 2f);
-                WarpUtils.saveWarp(warp);
-                this.open();
+                new EditWarpMenu(pmu, warp).open();
                 break;
         }
     }
@@ -56,12 +55,8 @@ public class EditWarpMenu extends Menu {
     @Override
     public void setMenuItems() {
         inventory.setItem(13, WarpUtils.createWarpItem(warp, false, false));
-        if (warp.isGlowing()) {
-            inventory.setItem(29, makeItem(Material.GLOW_INK_SAC, "§a§lGLOWING » ON", "§7This will make the warp item glow!"));
-        } else {
-            inventory.setItem(29, makeItem(Material.GLOW_INK_SAC, "§c§lGLOWING » OFF", "§7This will make the warp item glow!"));
-        }
-        inventory.setItem(31, makeItem(Material.RED_CONCRETE, "§c§lDELETE WARP", "§7This will permanently delete this warp!"));
-        inventory.setItem(36, makeItem(Material.BOOK, "§eBack"));
+        inventory.setItem(11, makeItem(Material.LIME_CONCRETE, "§a§lDON'T DELETE"));
+        inventory.setItem(15, makeItem(Material.RED_CONCRETE, "§c§lDELETE"));
+        inventory.setItem(22, makeItem(Material.BOOK, "§eBack"));
     }
 }

@@ -11,12 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
-import java.util.TreeMap;
 
 public final class PotatoWarp extends JavaPlugin {
+    private static HashMap<String, Warp> WARPS = new HashMap<>();
     public static final HashMap<Player, Long> PLAYER_TIME = new HashMap<>();
     public static final HashMap<Player, Warp> PLAYER_WARP = new HashMap<>();
-    private static final TreeMap<String, Warp> WARPS = new TreeMap<>();
     private static final HashMap<Player, PlayerMenuUtility> pmuMap = new HashMap<>();
 
     private static PotatoWarp instance;
@@ -41,7 +40,7 @@ public final class PotatoWarp extends JavaPlugin {
         getCommand("movewarp").setExecutor(new MoveWarpCommand());
         getCommand("movewarp").setTabCompleter(new MoveWarpCommand());
 
-        Bukkit.getScheduler().runTaskTimer(this, WarpUtils::readWarps, 10, 100);
+        Bukkit.getScheduler().runTaskTimer(this, WarpUtils::readWarps, 10, 40);
         Bukkit.getScheduler().runTaskTimer(this, this::warpPlayers, 0, 1);
     }
 
@@ -80,7 +79,7 @@ public final class PotatoWarp extends JavaPlugin {
         instance = null;
     }
 
-    public static TreeMap<String, Warp> getWarps() {
+    public static HashMap<String, Warp> getWarps() {
         return WARPS;
     }
 

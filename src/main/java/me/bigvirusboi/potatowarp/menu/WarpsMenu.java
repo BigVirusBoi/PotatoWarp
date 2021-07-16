@@ -67,7 +67,7 @@ public class WarpsMenu extends Menu {
                     if (warp != null) {
                         ClickType type = e.getClick();
                         if (type == ClickType.MIDDLE) {
-                            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 0f);
+                            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1f, 1f);
                             new EditWarpMenu(pmu, warp).open();
                         } else if (type.isShiftClick()) {
                             warp.forceWarp(player);

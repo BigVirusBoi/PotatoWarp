@@ -3,7 +3,7 @@
 warp-delay: 0
 
 ### Messages
-prefix: §3[§b§lPotatoWarp§3]
+prefix: §b§lPotatoWarp §8»
 message.specify_warp_name: §cPlease specify a warp name!
 message.name_invalid: §cName §e§n%name%§c is invalid!
 message.warp_created: §aWarp §e§n%warp%§a has been created!

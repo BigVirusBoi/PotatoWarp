@@ -12,11 +12,13 @@ public class Warp {
     private final String id;
     private Location location;
     private Material icon;
+    private boolean glowing;
 
-    public Warp(String id, Location location, Material icon) {
+    public Warp(String id, Location location, Material icon, boolean glowing) {
         this.id = id;
         this.location = location;
         this.icon = icon;
+        this.glowing = glowing;
     }
 
     public String getId() {
@@ -31,12 +33,16 @@ public class Warp {
         return icon;
     }
 
+    public boolean isGlowing() {
+        return glowing;
+    }
+
     public void setLocation(Location location) {
         this.location = location;
     }
 
-    public void setIcon(Material icon) {
-        this.icon = icon;
+    public void setGlowing(boolean glowing) {
+        this.glowing = glowing;
     }
 
     public void warpPlayer(Player player) {
