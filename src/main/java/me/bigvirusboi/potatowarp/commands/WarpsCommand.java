@@ -13,6 +13,7 @@ public class WarpsCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
+            PotatoWarp.getInstance().cancelWarp(player);
             new WarpsMenu(PotatoWarp.getPMU(player)).open();
         } else {
             sender.sendMessage(Messages.PLAYERS_ONLY);

@@ -25,9 +25,9 @@ public class DelWarpCommand implements CommandExecutor, TabExecutor {
                 if (PotatoWarp.getWarps().containsKey(id)) {
                     WarpUtils.deleteWarp(id);
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
-                    player.sendMessage(Messages.getConfigMessage(Messages.WARP_DELETED, id));
-                } else sender.sendMessage(Messages.getConfigMessage(Messages.WARP_NOT_EXISTING, id));
-            } else sender.sendMessage(Messages.getConfigMessage(Messages.SPECIFY_NAME));
+                    Messages.sendMessage(player, Messages.WARP_DELETED, id);
+                } else Messages.sendMessage(player, Messages.WARP_NOT_EXISTING, id);
+            } else Messages.sendMessage(player, Messages.SPECIFY_NAME);
         } else {
             sender.sendMessage(Messages.PLAYERS_ONLY);
         }

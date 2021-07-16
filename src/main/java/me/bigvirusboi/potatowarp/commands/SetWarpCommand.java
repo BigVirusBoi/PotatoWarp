@@ -20,10 +20,10 @@ public class SetWarpCommand implements CommandExecutor {
                     if (!PotatoWarp.getWarps().containsKey(id)) {
                         WarpUtils.createWarp(id, player.getLocation());
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
-                        player.sendMessage(Messages.getConfigMessage(Messages.WARP_CREATED, id));
-                    } else sender.sendMessage(Messages.getConfigMessage(Messages.WARP_EXISTS, id));
-                } else sender.sendMessage(Messages.getConfigMessage(Messages.NAME_INVALID, id));
-            } else sender.sendMessage(Messages.getConfigMessage(Messages.SPECIFY_NAME));
+                        Messages.sendMessage(player, Messages.WARP_CREATED, id);
+                    } else Messages.sendMessage(player, Messages.WARP_EXISTS, id);
+                } else Messages.sendMessage(player, Messages.NAME_INVALID, id);
+            } else Messages.sendMessage(player, Messages.SPECIFY_NAME);
         } else {
             sender.sendMessage(Messages.PLAYERS_ONLY);
         }

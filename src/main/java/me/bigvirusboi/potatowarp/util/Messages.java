@@ -1,6 +1,7 @@
 package me.bigvirusboi.potatowarp.util;
 
 import me.bigvirusboi.potatowarp.PotatoWarp;
+import org.bukkit.entity.Player;
 
 public class Messages {
     public static final String PLAYERS_ONLY = "§cOnly players can execute this command!";
@@ -12,15 +13,18 @@ public class Messages {
     public static final String WARP_DELETED = "message.warp_deleted";
     public static final String WARP_NOT_EXISTING = "message.warp_not_existing";
     public static final String WARP_EXISTS = "message.warp_exists";
+    public static final String WARP_DELAY = "message.warp_delay";
     public static final String WARP = "message.warp";
+    public static final String CANCEL_WARP = "message.cancel_warp";
 
     public static final String ERROR = "§cAn unexpected error occurred";
 
-    public static String getConfigMessage(String name, Object... args) {
+    public static void sendMessage(Player player, String name, Object... args) {
         String string = PotatoWarp.getInstance().getConfig().getString(name);
         if (string != null) {
-            return String.format(PREFIX + " §r" + string, args);
-        }
-        return "§cAn error occurred, please check the config!";
+            if (args.length == 0) {
+                player.sendMessage(PREFIX + " §r" + string);
+            } else player.sendMessage(String.format(PREFIX + " §r" + string, args));
+        } else player.sendMessage("§cAn unexpected error occurred");
     }
 }

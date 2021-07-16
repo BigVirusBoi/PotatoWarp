@@ -22,8 +22,8 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                 String id = args[0];
                 if (PotatoWarp.getWarps().containsKey(id)) {
                     PotatoWarp.getWarps().get(id).warpPlayer(player);
-                } else sender.sendMessage(Messages.getConfigMessage(Messages.WARP_NOT_EXISTING, id));
-            } else sender.sendMessage(Messages.getConfigMessage(Messages.SPECIFY_NAME));
+                } else Messages.sendMessage(player, Messages.WARP_NOT_EXISTING, id);
+            } else Messages.sendMessage(player, Messages.SPECIFY_NAME);
         } else {
             sender.sendMessage(Messages.PLAYERS_ONLY);
         }
