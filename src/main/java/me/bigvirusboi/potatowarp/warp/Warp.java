@@ -1,7 +1,7 @@
 package me.bigvirusboi.potatowarp.warp;
 
 import me.bigvirusboi.potatowarp.PotatoWarp;
-import me.bigvirusboi.potatowarp.Config;
+import me.bigvirusboi.potatowarp.util.Config;
 import me.bigvirusboi.potatowarp.data.Messages;
 import org.bukkit.*;
 import org.bukkit.entity.Player;

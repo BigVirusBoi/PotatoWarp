@@ -3,6 +3,7 @@ package me.bigvirusboi.potatowarp;
 import me.bigvirusboi.potatowarp.commands.*;
 import me.bigvirusboi.potatowarp.menu.system.MenuListener;
 import me.bigvirusboi.potatowarp.data.*;
+import me.bigvirusboi.potatowarp.util.Config;
 import me.bigvirusboi.potatowarp.warp.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -20,7 +21,6 @@ public final class PotatoWarp extends JavaPlugin implements Listener {
     private static final LinkedHashMap<String, Warp> WARPS = new LinkedHashMap<>();
     public static final HashMap<Player, Long> PLAYER_TIME = new HashMap<>();
     public static final HashMap<Player, Warp> PLAYER_WARP = new HashMap<>();
-    public static final HashMap<Player, Location> PREV_LOCATION = new HashMap<>();
 
     private static PotatoWarp instance;
 
@@ -28,6 +28,8 @@ public final class PotatoWarp extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
 
+        getConfig().options().copyDefaults(true);
+        getConfig().options().copyHeader(true);
         saveDefaultConfig();
 
         Config.readConfig();

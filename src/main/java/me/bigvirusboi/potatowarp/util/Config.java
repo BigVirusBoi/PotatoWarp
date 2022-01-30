@@ -1,5 +1,6 @@
-package me.bigvirusboi.potatowarp;
+package me.bigvirusboi.potatowarp.util;
 
+import me.bigvirusboi.potatowarp.PotatoWarp;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class Config {
